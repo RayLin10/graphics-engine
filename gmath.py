@@ -26,12 +26,12 @@ def get_lighting(normal, view, ambient, light, areflect, dreflect, sreflect ):
     i = []
     length = 3
 
-    iambient = calculate_ambient(alight, areflect)
+    iambient = calculate_ambient(ambient, areflect)
     idiffuse = calculate_diffuse(light, dreflect, normal)
     ispecular = calculate_specular(light, sreflect, view, normal)
 
     for x in range(length):
-        i.append(iambient[x] + idiffuse[x] + ispecular[x]))
+        i.append(int(iambient[x] + idiffuse[x] + ispecular[x]))
     limit_color(i)
     
     return i
@@ -56,7 +56,7 @@ def calculate_diffuse(light, dreflect, normal):
     length = 3
 
     for x in range(length):
-        idiffuse.append(dlight[x] * dreflect[x] * product[x])
+        idiffuse.append(dlight[x] * dreflect[x] * product)
 
     return idiffuse
 
@@ -69,11 +69,11 @@ def calculate_specular(light, sreflect, view, normal):
     
     ispecular = []
     model = []
-    length = 3
-    exponent = 2
+    length = 2
+    exponent = 4
 
     for x in range(length):
-        model.append(((2 * normal[x] * product[x]) - svector[x]) * view[x])
+        model.append(((2 * normal[x] * product) - svector[x]) * view[x])
 
     for x in range(length):
         ispecular.append(slight[x] * sreflect[x] * pow(model[x], exponent))
